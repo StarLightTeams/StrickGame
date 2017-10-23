@@ -84,7 +84,7 @@ public class DataBuffer : ScriptableObject
             return null;
         for (int i = 0; i < len; i++)
         {
-            string_buffer[i] = 0;
+            string_buffer[i] = '0';
         }
         for (int i = 0; i < len; i++)
         {
@@ -99,7 +99,7 @@ public class DataBuffer : ScriptableObject
     {
         char[] a = ReadChars();
         if (a == null)
-            return new String("");
+            return "";
         else
             return new String((char[])a);
     }
@@ -109,7 +109,7 @@ public class DataBuffer : ScriptableObject
         int len = ReadShort() & 0xFFFF;
         char[] a = ReadRawBytes(len);
         if (a == null)
-            return new String("");
+            return "";
         else
             return new String((char[])a);
         // return string((char *)ReadRawBytes(len));
