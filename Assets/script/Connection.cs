@@ -10,10 +10,8 @@ public class Connection
 {
     //Socket客户端对象     
     private Socket clientSocket;
-
     public int conectionServer()
     {
-
         //创建Socket对象， 这里我的连接类型是TCP     
         clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         //服务器IP地址     
@@ -105,6 +103,23 @@ public class Connection
             conect2.header.length = icommand.header.length;
             conect2.ReadFromBufferBody(data);
             Debug.Log(conect2.body);
+           
+            Loom.RunAsync(() =>
+            {
+               
+                //Run some code on the main thread  
+                //to update the mesh  
+                //通过Loom静态方法 使用lambda 表达式在主线Action队列中加入新的方法，在Update中执行
+                //这块还是比较巧妙地，步骤 
+                //1、在子线程中进行 计算 
+                //2、计算完毕后子线程将结果和其赋值函数一起放入主线程Action队列中（还在子线程中） 
+                //3、在主线程Update函数中执行主线程Action队列(在主线程中)，实际是借用了Update的特性替代了轮询操作
+                //参数d
+                Loom.QueueOnMainThread(() =>
+                {
+                    GameObject.Find("Label_result").GetComponent<UILabel>().text = conect2.body;
+                });
+            });
         }
     }
     /**
