@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class CommandID : ScriptableObject
+public class CommandID
 {
     public  static int Unknown = 0x0000;//未知指令
     public  static int Heart = 0x0001;//心跳指令

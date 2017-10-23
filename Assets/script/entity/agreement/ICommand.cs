@@ -2,7 +2,7 @@
 using UnityEditor;
 using System;
 
-public class ICommand : ScriptableObject
+public class ICommand
 {
     public CommandHeader header = new CommandHeader();
     public int pos;
@@ -55,6 +55,6 @@ public class ICommand : ScriptableObject
         //		System.out.println("ICommand::ReadFromBuffer(DataBuffer& buffer) header.length = "+header.length+", header.id = "+ header.id);
         ReadBody(buffer);
     }
-    public void WriteBody(DataBuffer buffer, String str) { }
-    public void ReadBody(DataBuffer buffer) { }
+    public virtual void WriteBody(DataBuffer buffer, String str) { }
+    public virtual void ReadBody(DataBuffer buffer) { }
 }

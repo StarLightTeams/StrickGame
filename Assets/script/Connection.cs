@@ -6,7 +6,8 @@ using System.Net.Sockets;
 using System;
 using System.Threading;
 
-public class Connection  {
+public class Connection
+{
     //Socket客户端对象     
     private Socket clientSocket;
 
@@ -26,7 +27,7 @@ public class Connection  {
         if (!success)
         {
             //超时     
-           
+
             Debug.Log("connect Time Out");
         }
         else
@@ -59,7 +60,7 @@ public class Connection  {
             try
             {
                 //接受数据保存至bytes当中     
-                byte[] bytes = new byte[4096];
+                byte[] bytes = new byte[45056];
                 //Receive方法中会一直等待服务端回发消息     
                 //如果没有回发会一直在这里等着。     
                 int i = clientSocket.Receive(bytes);
@@ -71,14 +72,14 @@ public class Connection  {
 
                 //这里条件可根据你的情况来判断。     
                 //因为我目前的项目先要监测包头长度，     
-                //我的包头长度是2，所以我这里有一个判断     
-                if (bytes.Length > 2)
+                //我的包头长度是8，所以我这里有一个判断     
+                if (bytes.Length > 8)
                 {
-                    //SplitPackage(bytes, 0);
+                    SplitPackage(bytes, 0);
                 }
                 else
                 {
-                    Debug.Log("length is not  >  2");
+                    Debug.Log("length is not  > 8");
                 }
 
             }
@@ -89,5 +90,33 @@ public class Connection  {
                 break;
             }
         }
+    }
+    private void SplitPackage(byte[] bytes, int index)
+    {
+        DataBuffer data = getAgreeMentMessage(bytes);
+        ICommand icommand = new ICommand();
+        icommand.ReadBufferIp(data);
+        Debug.Log("id===="+icommand.header.id);
+        Debug.Log("length====="+icommand.header.length);
+        if (icommand.header.id == CommandID.Connect)
+        {
+            ConnectCommand conect2 = new ConnectCommand();
+            conect2.header.id = icommand.header.id;
+            conect2.header.length = icommand.header.length;
+            conect2.ReadFromBufferBody(data);
+            Debug.Log(conect2.body);
+        }
+    }
+    /**
+	 * 接受协议信息
+	 * @param bytes
+	 * @return
+	 */
+    public DataBuffer getAgreeMentMessage(byte[] bytes)
+    {
+        DataBuffer data = new DataBuffer();
+        char[] c = data.getChars(bytes);
+
+        return data;
     }
 }

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using UnityScript.Lang;
 using System.Text;
 
-public class DataBuffer : ScriptableObject
+public class DataBuffer
 {
     public int DATABUFFEREOF = 0x7fffffff;
     public int DATABUFFERMAXBUFFERSIZE = 40960;
@@ -279,7 +279,8 @@ public class DataBuffer : ScriptableObject
     }
     public char[] getChars(byte[] bytes)
     {
-        return Encoding.ASCII.GetChars(bytes); ;
+        buffer = Encoding.ASCII.GetChars(bytes);
+        return Encoding.ASCII.GetChars(bytes);
     }
     public String getString()
     {
