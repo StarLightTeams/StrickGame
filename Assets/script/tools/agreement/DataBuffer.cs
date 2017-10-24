@@ -275,12 +275,12 @@ public class DataBuffer
 
     public byte[] readByte()
     {
-        return Encoding.Default.GetBytes(buffer);
+        return Encoding.UTF8.GetBytes(buffer);
     }
     public char[] getChars(byte[] bytes)
     {
-        buffer = Encoding.ASCII.GetChars(bytes);
-        return Encoding.ASCII.GetChars(bytes);
+        buffer = Encoding.UTF8.GetChars(bytes);
+        return Encoding.UTF8.GetChars(bytes);
     }
     public String getString()
     {
