@@ -225,6 +225,7 @@
     <Compile Include="Assets\script\entity\agreement\CommandID.cs" />
     <Compile Include="Assets\script\entity\agreement\ICommand.cs" />
     <Compile Include="Assets\script\Loom.cs" />
+    <Compile Include="Assets\script\Process.cs" />
     <Compile Include="Assets\script\rule\ConnectCommand.cs" />
     <Compile Include="Assets\script\ServerConnect.cs" />
     <Compile Include="Assets\script\tools\agreement\DataBuffer.cs" />
