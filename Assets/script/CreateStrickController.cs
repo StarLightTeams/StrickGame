@@ -5,7 +5,7 @@ using UnityEngine;
 public class CreateStrickController : MonoBehaviour {
     // Use this for initialization
 
-    private int columnNum = 8;//列数  
+    private int columnNum = 7;//列数  
     private int rowNum = 3;//列数 
     public Transform transform;
     public GameObject brick;//预制体，此处是一个立方体 
@@ -22,7 +22,7 @@ public class CreateStrickController : MonoBehaviour {
 
                 //Instantiate(brick, new Vector3(columnIndex*2800  -11000, 18622 - 2800*rowIndex, 0), Quaternion.identity);
                 brick.transform.parent = transform;
-                brick.transform.position = new Vector3(-14+columnIndex * 4, 16 +4 * rowIndex, 0);
+                brick.transform.position = new Vector3(-15+columnIndex * 5, 16 +5 * rowIndex, 0);
                 //brick.GetComponent<Transform>().position = new Vector3(1, 0, 0);
                 brick.transform.localScale = new Vector3(20F, 20F, 0);
 
