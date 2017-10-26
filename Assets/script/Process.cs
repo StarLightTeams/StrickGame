@@ -5,12 +5,15 @@ using UnityEngine;
 public class Process : MonoBehaviour {
     private UIProgressBar progressBar;
     public GameObject loginScene;
+    private ServerConnect serverConnect = new ServerConnect();
     float i = 0;
     bool isStart = true;
+    int state;
     // Use this for initialization
     void Start () {
         progressBar = this.GetComponent<UIProgressBar>();
         progressBar.value = 0;
+        state =serverConnect.connectionToserver();
     }
     private void OnGUI()
     {
@@ -26,6 +29,13 @@ public class Process : MonoBehaviour {
             if (i > 1 && isStart)
             {
                 isStart = false;
+               
+            }
+        }
+        else
+        {
+            if (state != 0)
+            {
                 GameObject.Find("ConnectionObject").SetActive(false);
                 loginScene.SetActive(true);
             }

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ServerConnect : MonoBehaviour {
 
-    public void connectionToserver()
+    public int connectionToserver()
     {
         Connection connection = new Connection();
-        connection.conectionServer();
+        return connection.conectionServer();
     }
 }
