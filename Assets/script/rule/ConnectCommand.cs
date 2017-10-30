@@ -5,8 +5,6 @@ using UnityEditor;
 public class ConnectCommand : ICommand
 {
 
-
-    public string body = "";
     public ConnectCommand() : base(CommandID.Connect)
     {
        
