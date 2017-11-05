@@ -9,7 +9,15 @@ using System.Threading;
 public class Connection
 {
     //Socket客户端对象     
-    private Socket clientSocket;
+    private static Socket clientSocket;
+    public static Socket getInstance()
+    {
+        if(clientSocket!= null)
+        {
+            return clientSocket;
+        }
+        return null;
+    }
     public int conectionServer()
     {
         //创建Socket对象， 这里我的连接类型是TCP     
@@ -35,6 +43,18 @@ public class Connection
             Thread thread = new Thread(new ThreadStart(ReceiveSorket));
             thread.IsBackground = true;
             thread.Start();
+            //检查文件
+            
+            string txt = UserFileTool.readFile();
+            if(txt.Length == 0)
+            {
+                //发送空文件
+                SendTool.sendMessage(new GuestLoginCommand(), JsonTools.getString(new Info("")));
+            }
+            else
+            {
+                PlayerInfo.playerId = txt;
+            }
         }
         return 0;
     }
@@ -92,6 +112,8 @@ public class Connection
     private void SplitPackage(byte[] bytes, int index)
     {
         DataBuffer data = getAgreeMentMessage(bytes);
+        XMAgreement.parserAgreement(data);
+        /*
         ICommand icommand = new ICommand();
         icommand.ReadBufferIp(data);
         Debug.Log("id===="+icommand.header.id);
@@ -120,14 +142,15 @@ public class Connection
                     GameObject.Find("Label_result").GetComponent<UILabel>().text = conect2.body;
                 });
             });
-        }
+          } 
+        */
     }
     /**
 	 * 接受协议信息
 	 * @param bytes
 	 * @return
 	 */
-    public DataBuffer getAgreeMentMessage(byte[] bytes)
+        public DataBuffer getAgreeMentMessage(byte[] bytes)
     {
         DataBuffer data = new DataBuffer();
         char[] c = data.getChars(bytes);

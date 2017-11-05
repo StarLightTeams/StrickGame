@@ -45,7 +45,7 @@ public class XMAgreement  {
             guest.header.id = icommand.header.id;
             guest.header.length = icommand.header.length;
             guest.ReadFromBufferBody(data);
-
+            UserFileTool.writeFile(data);
         }
         return icommand;
     }

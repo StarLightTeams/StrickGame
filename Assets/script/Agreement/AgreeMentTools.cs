@@ -1,0 +1,132 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AgreeMentTools  {
+
+    /**
+	 * 判断协议类型,返回该协议实例
+	 */
+    public static ICommand judgeICommand(int id)
+    {
+        if (id == CommandID.Connect)
+        {//连接协议
+            return new ConnectCommand(id);
+        }
+        else if (id == CommandID.GuestLogin)
+        {//游客协议
+            return new GuestLoginCommand(id);
+        }
+        else if (id == CommandID.Heart)
+        {//心跳协议
+            return new HeartCommand(id);
+        }
+        else if (id == CommandID.Login)
+        {//登录协议
+            return new LoginCommand(id);
+        }
+        else if (id == CommandID.Unknown)
+        {//未知数据协议
+            return new UnknownCommand(id);
+        }
+        else if (id == CommandID.LoginOut)
+        {//退出登录协议
+            return new LoginOutCommand(id);
+        }
+        else if (id == CommandID.Register)
+        {//注册协议
+            return new RegisterCommand(id);
+        }
+        else if (id == CommandID.GeneralInformation)
+        {//普通信息协议
+            return new GeneralInformationCommand(id);
+        }
+        else if (id == CommandID.VerifyState)
+        {//验证全部玩家状态协议
+            return new VerifyStateCommand(id);
+        }
+        else if (id == CommandID.VerifyStateErr)
+        {//验证全部玩家状态错误协议
+            return new VerifyStateErrCommand(id);
+        }
+        else if (id == CommandID.GamePreparing)
+        {//游戏准备协议
+            return new GamePreparingCommand(id);
+        }
+        else if (id == CommandID.GamePreparingError)
+        {//游戏准备错误协议
+            return new GamePreparingErrorCommand(id);
+        }
+        else if (id == CommandID.GameLoading)
+        {//游戏加载协议
+            return new GameLoadingCommand(id);
+        }
+        else if (id == CommandID.WaitOtherPeople)
+        {//等待其他玩家协议
+            return new WaitOtherPeopleCommand(id);
+        }
+        else if (id == CommandID.GameStart)
+        {//游戏开始协议
+            return new GameStartCommand(id);
+        }
+        else
+        {
+            //返回错误协议数据
+            return new ICommand();
+        }
+    }
+
+    /**
+	 * 判断协议类型,返回该协议实例
+	 */
+    public static int judgeICommand(ICommand iCommand)
+    {
+        if (iCommand.getClass().equals(ConnectCommand.class)){//连接协议
+			return CommandID.Connect;
+		}else if(iCommand.getClass().equals(GuestLoginCommand.class)){//游客协议
+			return CommandID.GuestLogin;
+		}else if(iCommand.getClass().equals(HeartCommand.class)) {//心跳协议
+			return CommandID.Heart;
+		}else if(iCommand.getClass().equals(LoginCommand.class)) {//登录协议
+			return CommandID.Login;
+		}else if(iCommand.getClass().equals(UnknownCommand.class)){//未知数据协议
+			return CommandID.Unknown;
+		}else if(iCommand.getClass().equals(LoginOutCommand.class)){//退出登录协议
+			return CommandID.LoginOut;
+		}else if(iCommand.getClass().equals(RegisterCommand.class)){//注册协议
+			return CommandID.Register;
+		}else if(iCommand.getClass().equals(UnknownCommand.class)){//普通信息协议
+			return CommandID.GeneralInformation;
+		}else if(iCommand.getClass().equals(GamePreparingCommand.class)) {//游戏准备协议
+			return CommandID.GamePreparing;
+		}else if(iCommand.getClass().equals(GamePreparingErrorCommand.class)) {//游戏准备错误协议
+			return CommandID.GamePreparingError;
+		}else if(iCommand.getClass().equals(VerifyStateCommand.class)) {//验证全部玩家状态协议
+			return CommandID.VerifyState;
+		}else if(iCommand.getClass().equals(VerifyStateErrCommand.class)) {//验证全部玩家状态错误协议
+			return CommandID.VerifyStateErr;
+		}else if(iCommand.getClass().equals(GameLoadingCommand.class)){//游戏加载协议
+			return CommandID.GameLoading;
+		}else if(iCommand.getClass().equals(WaitOtherPeopleCommand.class)){//等待其他玩家协议
+			return CommandID.WaitOtherPeople;
+		}else if(iCommand.getClass().equals(GameStartCommand.class)){//游戏开始协议
+			return CommandID.GameStart;
+		}else {
+			//返回错误协议数据
+			return 0;
+		}
+	}
+	
+	/**
+	 * 获得协议数据
+	 */
+	public static ICommand getICommand(DataBuffer data)
+    {
+    ICommand iCommand = new ICommand();
+    iCommand.ReadBufferIp(data);
+    ICommand c = judgeICommand(iCommand.header.id);
+    c.ReadFromBufferBody(data);
+    return c;
+    }
+	
+}
